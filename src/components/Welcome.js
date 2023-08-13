@@ -12,7 +12,7 @@ const Welcome = () => {
 
   return (
     <main className="welcome">
-      <h2>Welcome to the Modo Journal App</h2>
+      <h2>Welcome to the Mood Journal App</h2>
       <p>Sign in with Google to access the app</p>
       <button className="sign-in">
         <img

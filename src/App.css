@@ -36,3 +36,41 @@
     transform: rotate(360deg);
   }
 }
+
+/* navbar */
+.nav-bar {
+  padding: 10px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #fff;
+  color: #000;
+  height: 60px;
+}
+.sign-in {
+  border: none;
+  background-color: transparent;
+}
+.sign-in > img {
+  height: 30px;
+  width: auto;
+}
+.sign-out {
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: #727272;
+  border: 1px solid #010101;
+  background-color: #fff;
+  font-weight: 600;
+}
+
+/* welcome page */
+.welcome {
+  padding: 30px;
+  text-align: center;
+  margin-top: 40px;
+  color: #3a3a3a;
+}
+.welcome :is(h2, p, img) {
+  margin-bottom: 20px;
+}
