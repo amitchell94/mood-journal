@@ -8,6 +8,7 @@ import MyLog from './components/MyLog';
 import { useEffect, useState } from 'react';
 import { Spinner } from 'react-bootstrap';
 import NewEntry from './components/NewEntry';
+import ViewEntry from './components/ViewEntry';
 
 function App() {
   const [user, loading, error] = useAuthState(auth);
@@ -37,6 +38,7 @@ function App() {
           <Routes>
             <Route path='/' element={<MyLog />} />
             <Route path='/new' element={<NewEntry />} />
+            <Route path='/entry/:id' element={<ViewEntry />} />
           </Routes>
         </>
         ) }

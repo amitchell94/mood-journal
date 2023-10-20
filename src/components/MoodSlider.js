@@ -1,7 +1,14 @@
 import { Col } from "react-bootstrap";
 import RangeSlider from 'react-bootstrap-range-slider';
 
-const MoodSlider = ({text, state, setState}) => {
+const MoodSlider = ({text, state, setState, onValueChange}) => {
+
+    const handleChange = (value) => {
+        setState(value);
+        if (onValueChange) {
+            onValueChange(value);
+        }
+    };
     return (
         <div className="col-12 mx-auto mb-4 text-start row">        
             <label htmlFor="sadInput" >
@@ -10,7 +17,7 @@ const MoodSlider = ({text, state, setState}) => {
             <Col xs="9">
             <RangeSlider
                 value={state}
-                onChange={e => setState(e.target.value)}
+                onChange={e => handleChange(e.target.value)}
             />
             </Col>
             <Col xs="3">
@@ -20,7 +27,7 @@ const MoodSlider = ({text, state, setState}) => {
                 type="text"
                 className="form-input__input form-control"
                 value={state}
-                onChange={(e) => setState(e.target.value)}
+                onChange={(e) => handleChange(e.target.value)}
                 />
             </Col>
         </div>
