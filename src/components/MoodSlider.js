@@ -1,7 +1,7 @@
 import { Col } from "react-bootstrap";
 import RangeSlider from 'react-bootstrap-range-slider';
 
-const MoodSlider = ({text, state, setState, onValueChange}) => {
+const MoodSlider = ({text, state, setState, onValueChange, goal}) => {
 
     const handleChange = (value) => {
         setState(value);
@@ -12,7 +12,7 @@ const MoodSlider = ({text, state, setState, onValueChange}) => {
     return (
         <div className="col-12 mx-auto mb-4 text-start row">        
             <label htmlFor="sadInput" >
-                How strongly do you feel: {text}
+                {goal? <> How strongly <b>would you like</b> to feel</> : "How strongly do you feel"}: {text}?
             </label>
             <Col xs="9">
             <RangeSlider

@@ -45,12 +45,27 @@ const NewEntry = () => {
   const [angryLevelNow, setAngryLevelNow] = useState(50);
   const [otherLevelNow, setOtherLevelNow] = useState(50);
 
-  const [emotions, setEmotions] = useState([]); // Initialize as empty array
+  const [sadLevelGoal, setSadLevelGoal] = useState(5);
+  const [anxiousLevelGoal, setAnxiousLevelGoal] = useState(5);
+  const [guiltyLevelGoal, setGuiltyLevelGoal] = useState(5);
+  const [inferiorLevelGoal, setInferiorLevelGoal] = useState(5);
+  const [lonelyLevelGoal, setLonelyLevelGoal] = useState(5);
+  const [embarrassedLevelGoal, setEmbarrassedLevelGoal] = useState(5);
+  const [hopelessLevelGoal, setHopelessLevelGoal] = useState(5);
+  const [frustratedLevelGoal, setFrustratedLevelGoal] = useState(5);
+  const [angryLevelGoal, setAngryLevelGoal] = useState(5);
+  const [otherLevelGoal, setOtherLevelGoal] = useState(5);
+
+  const [emotions, setEmotions] = useState([]); 
+
+  const [thought, setThought] = useState(''); 
+  const [thoughtsList, setThoughtsList] = useState([]); 
+
 
 
   const handleEmotionToggle = (emotionType, newState) => {
     if (newState) {
-        setEmotions([...emotions, { type: emotionType, level: 50 }]);
+        setEmotions([...emotions, { type: emotionType, level: 50, goal: 5 }]);
     } else {
         setEmotions(emotions.filter(emotion => emotion.type !== emotionType));
     }
@@ -67,7 +82,23 @@ const NewEntry = () => {
 
     setEmotions(updatedEmotions);
   };
-  
+
+  const handleEmotionGoalLevelChange = (emotionType, newLevel) => {
+    const updatedEmotions = emotions.map(emotion => {
+      if (emotion.type === emotionType) {
+          return { ...emotion, goal: parseInt(newLevel, 10) };
+      }
+      return emotion;
+  });
+
+    setEmotions(updatedEmotions);
+  };
+
+  const addThought = () => {
+    setThoughtsList([...thoughtsList, thought]);
+    setThought(''); 
+  };
+    
   const navigate = useNavigate();
 
   const newEntry = async (event) => {
@@ -98,9 +129,9 @@ const NewEntry = () => {
     <div className="container bg-white card pt-1 my-4">
     <form onSubmit={(event) => newEntry(event)} className="new-todo input-group">
       <div className="row col-6 mx-auto">
-        <h1 className="text-center mx-auto mt-3">New Journal Entry</h1>
+        <h1 className="text-center mx-auto mt-3 mb-5">New Journal Entry</h1>
         {currentStep === 1 && (
-          <div className="col-12 mx-auto mt-5 mb-2 text-start">
+          <div className="col-12 mx-auto mb-2 text-start">
             <label htmlFor="codeInput" className="text-start">
               Describe the upsetting event
             </label>
@@ -146,13 +177,55 @@ const NewEntry = () => {
           </div>
         )}
 
+        {currentStep === 4 && (
+          <div className="col-12 mx-auto mb-4">
+            {isSad ? <MoodSlider state={sadLevelGoal} setState={setSadLevelGoal} text={SAD_TEXT} goal={true} onValueChange={(newLevel) => handleEmotionGoalLevelChange("sad", newLevel)} /> : <></>}
+            {isAnxious ? <MoodSlider state={anxiousLevelGoal} setState={setAnxiousLevelGoal} text={ANXIOUS_TEXT} goal={true} onValueChange={(newLevel) => handleEmotionGoalLevelChange("anxious", newLevel)} /> : <></>}
+            {isGuilty ? <MoodSlider state={guiltyLevelGoal} setState={setGuiltyLevelGoal} text={GUILTY_TEXT} goal={true} onValueChange={(newLevel) => handleEmotionGoalLevelChange("guilty", newLevel)} /> : <></>}
+            {isInferior ? <MoodSlider state={inferiorLevelGoal} setState={setInferiorLevelGoal} text={INFERIOR_TEXT} goal={true} onValueChange={(newLevel) => handleEmotionGoalLevelChange("inferior", newLevel)} /> : <></>}
+            {isLonely ? <MoodSlider state={lonelyLevelGoal} setState={setLonelyLevelGoal} text={LONELY_TEXT} goal={true} onValueChange={(newLevel) => handleEmotionGoalLevelChange("lonely", newLevel)} /> : <></>}
+            {isEmbarrassed ? <MoodSlider state={embarrassedLevelGoal} setState={setEmbarrassedLevelGoal} text={EMBARRASSED_TEXT} goal={true} onValueChange={(newLevel) => handleEmotionGoalLevelChange("embarrassed", newLevel)} /> : <></>}
+            {isHopeless ? <MoodSlider state={hopelessLevelGoal} setState={setHopelessLevelGoal} text={HOPELESS_TEXT} goal={true} onValueChange={(newLevel) => handleEmotionGoalLevelChange("hopeless", newLevel)} /> : <></>}
+            {isFrustrated ? <MoodSlider state={frustratedLevelGoal} setState={setFrustratedLevelGoal} text={FRUSTRATED_TEXT} goal={true} onValueChange={(newLevel) => handleEmotionGoalLevelChange("frustrated", newLevel)} /> : <></>}
+            {isAngry ? <MoodSlider state={angryLevelGoal} setState={setAngryLevelGoal} text={ANGRY_TEXT} goal={true} onValueChange={(newLevel) => handleEmotionGoalLevelChange("angry", newLevel)} /> : <></>}
+            {isOther ? <MoodSlider state={otherLevelGoal} setState={setOtherLevelGoal} text={OTHER_TEXT} goal={true} onValueChange={(newLevel) => handleEmotionGoalLevelChange("other", newLevel)} /> : <></>}
+          </div>
+        )}
+
+        {currentStep === 5 && (
+          <div className="col-12 mx-auto mb-4">
+            <h5 className="mb-3">Negative Thoughts</h5>
+            <ul className="list-group mb-3">
+              {thoughtsList.map((t, index) => (
+                <li className="list-group-item list-group-item-secondary" key={index}>{t}</li>
+              ))}
+            </ul>
+
+            {/* Your existing mood sliders and other content can go here */}
+            
+            {/* Add new thought input box and button */}
+            <div className="add-thought">
+              <input 
+                type="text" 
+                value={thought} 
+                className="form-input__input form-control mb-3"
+                onChange={e => setThought(e.target.value)}
+                placeholder="Enter your negative thought"
+              />
+              <Button onClick={addThought} className="mx-2 px-5 mb-5">
+              Add
+            </Button>
+            </div>
+           </div>
+        )}
+
         <div className="col-12 mx-auto text-center">
           {currentStep > 1 && (
             <Button onClick={() => setCurrentStep((prevStep) => prevStep - 1)} className="mx-2 px-5 mb-5">
               Back
             </Button>
           )}
-          {currentStep < 3 ? (
+          {currentStep < 6 ? (
             <Button type="button" onClick={() => setCurrentStep((prevStep) => prevStep + 1)} className="mx-2 px-5 mb-5">
               Next
             </Button>
