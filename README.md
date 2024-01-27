@@ -1,5 +1,7 @@
 # Mood Journal
 
+This is an app to help keep track of and combat negative thoughts using CBT and positive reframing exercises.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
